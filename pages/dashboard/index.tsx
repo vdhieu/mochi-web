@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { Layout } from "~app/layout";
+import { DashboardLayout } from "~app/dashboard/layout";
 import { SEO } from "~app/layout/seo";
 import { DiscordUser } from "~pages/api/oauth";
 import { parseUser } from "~utils/user";
@@ -8,9 +8,9 @@ type Props = { user: DiscordUser | null };
 
 export default function DashboardPage(props: Props) {
   return (
-    <Layout>
+    <DashboardLayout>
       <SEO title="Dashboard" tailTitle />
-      <div className="max-w-5xl px-12 py-48 mx-auto">
+      <div>
         {!props.user && (
           <h2 className="text-4xl font-bold text-center">
             You are being redirected.
@@ -22,7 +22,7 @@ export default function DashboardPage(props: Props) {
           </p>
         )}
       </div>
-    </Layout>
+    </DashboardLayout>
   );
 }
 
