@@ -50,7 +50,7 @@ export const ServerSelect = () => {
         </div>
       )}
     >
-      <div className="p-1 mt-4 bg-white rounded shadow-xl shadow-gray-200">
+      <div className="w-full p-1 mt-4 bg-white rounded shadow-xl shadow-gray-200">
         {options.map((option, key) => (
           <Select.Option
             value={option}

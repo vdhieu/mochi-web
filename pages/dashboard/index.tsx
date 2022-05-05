@@ -1,27 +1,23 @@
 import { GetServerSideProps } from "next";
+import { DashboardPage } from "~app/dashboard";
 import { DashboardLayout } from "~app/dashboard/layout";
 import { SEO } from "~app/layout/seo";
 import { DiscordUser } from "~pages/api/oauth";
 import { parseUser } from "~utils/user";
 
-type Props = { user: DiscordUser | null };
+export interface DiscordUserProps {
+  user: DiscordUser;
+}
 
-export default function DashboardPage(props: Props) {
+interface Props {
+  user: DiscordUser | null;
+}
+
+export default function dashboard(props: DiscordUserProps) {
   return (
-    <DashboardLayout>
+    <DashboardLayout user={props.user}>
       <SEO title="Dashboard" tailTitle />
-      <div>
-        {!props.user && (
-          <h2 className="text-4xl font-bold text-center">
-            You are being redirected.
-          </h2>
-        )}
-        {props.user && (
-          <p>
-            Hey, {props.user.username}#{props.user.discriminator}
-          </p>
-        )}
-      </div>
+      <DashboardPage />
     </DashboardLayout>
   );
 }

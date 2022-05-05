@@ -1,6 +1,8 @@
 import { UsersIcon, ViewGridIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
-import { ServerSelect } from "./server";
+import { DiscordUserProps } from "~pages/dashboard";
+import { ServerSelect } from "./server-select";
+import { UserInfo } from "./user-info";
 
 const DASHBOARD_ROUTES = [
   {
@@ -15,35 +17,35 @@ const DASHBOARD_ROUTES = [
   },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = (props: DiscordUserProps) => {
   return (
-    <div className="px-6 bg-gray-100 border-r border-gray-200 w-96 py-9">
+    <div className="flex flex-col px-6 bg-gray-100 border-r border-gray-200 w-96 py-9">
       <ServerSelect />
       <div className="mt-12" />
-      <div>
-        {DASHBOARD_ROUTES.map((item) => {
-          const active = item.path === "/dashboard";
-          return (
-            <button
-              key={item.path}
+      {DASHBOARD_ROUTES.map((item) => {
+        const active = item.path === "/dashboard";
+        return (
+          <button
+            key={item.path}
+            className={classNames(
+              "px-4 py-3 rounded-lg hover:shadow-xl hover:shadow-gray-200 flex items-center gap-2 w-full mb-2",
+              "transition-shadow ease duration-200",
+              active ? "bg-gray-800" : "bg-white"
+            )}
+          >
+            <item.icon className="block w-6 h-6 text-gray-400" />
+            <div
               className={classNames(
-                "px-4 py-3 rounded-lg hover:shadow-xl shadow-gray-50 flex items-center gap-2 w-full mb-2",
-                active ? "bg-gray-800" : "bg-white"
+                "flex-1 text-sm font-medium truncate text-left",
+                active && "text-white"
               )}
             >
-              <item.icon className="block w-6 h-6 text-gray-400" />
-              <div
-                className={classNames(
-                  "flex-1 text-sm font-medium truncate text-left",
-                  active && "text-white"
-                )}
-              >
-                {item.name}
-              </div>
-            </button>
-          );
-        })}
-      </div>
+              {item.name}
+            </div>
+          </button>
+        );
+      })}
+      <UserInfo user={props.user} />
     </div>
   );
 };

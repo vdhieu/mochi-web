@@ -1,7 +1,7 @@
 import { Layout } from "~app/layout";
 import { SEO } from "~app/layout/seo";
 
-export default function NotFoundPage() {
+export default function notfound() {
   return (
     <Layout>
       <SEO title="404" tailTitle />

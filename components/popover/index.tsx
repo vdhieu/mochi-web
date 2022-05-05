@@ -14,12 +14,16 @@ interface Props<T> {
 
 const Select = <T,>(props: Props<T>) => {
   return (
-    <Listbox value={props.value} onChange={props.onChange}>
-      <Listbox.Button className={props.className}>
-        {props.content(props.value)}
-      </Listbox.Button>
-      <Listbox.Options className="absolute">{props.children}</Listbox.Options>
-    </Listbox>
+    <div className="relative">
+      <Listbox value={props.value} onChange={props.onChange}>
+        <Listbox.Button className={props.className}>
+          {props.content(props.value)}
+        </Listbox.Button>
+        <Listbox.Options className="absolute w-full">
+          {props.children}
+        </Listbox.Options>
+      </Listbox>
+    </div>
   );
 };
 
