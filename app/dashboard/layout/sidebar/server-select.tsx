@@ -10,7 +10,7 @@ const options = [
   {
     id: "376323430175473664",
     logo: "https://cdn.discordapp.com/icons/376323430175473664/f94473ee49e0b7b217f737b7a8c2005d.jpg",
-    name: "Nam và những người bạn",
+    name: "Dante tuổi j sánh vai",
   },
   {
     id: "376323430175473663",
