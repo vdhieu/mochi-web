@@ -6,7 +6,7 @@ interface Props extends DiscordUserProps {
 }
 
 export const DashboardLayout = (props: Props) => (
-  <div className="flex w-screen h-screen overflow-hidden">
+  <div className="flex w-screen h-screen overflow-hidden bg-gray-100">
     <Sidebar user={props.user} />
     <div className="flex-1 h-screen overflow-x-hidden overflow-y-auto">
       {props.children}

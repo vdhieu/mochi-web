@@ -80,7 +80,7 @@ const Item = (props: { item: ItemProps; active: boolean }) => {
   return (
     <button
       className={classNames(
-        "px-4 py-3 rounded-lg hover:shadow-xl hover:shadow-gray-200 flex items-center gap-2 w-full mb-2 group",
+        "relative px-4 py-3 rounded-lg hover:bg-gray-100 flex items-center gap-2 w-full mb-2 group hover:z-10",
         "transition-shadow ease duration-200",
         props.active ? "bg-gray-800" : "bg-white"
       )}
@@ -100,7 +100,7 @@ const Item = (props: { item: ItemProps; active: boolean }) => {
 
 export const Links = () => {
   return (
-    <div>
+    <div className="flex-1 pr-2 overflow-y-auto scroller">
       {DASHBOARD_ROUTES.map((item, key) => {
         if (item.path)
           return (

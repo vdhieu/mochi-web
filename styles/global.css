@@ -20,6 +20,25 @@ a:hover {
   @apply text-mochi;
 }
 
+/* Scroll bar */
+.scroller {
+  scrollbar-color: theme("colors.gray.500") theme("colors.gray.200");
+  scrollbar-width: thin;
+}
+
+.scroller::-webkit-scrollbar {
+  width: 4px;
+}
+.scroller::-webkit-scrollbar-track {
+  background: theme("colors.gray.200");
+}
+.scroller::-webkit-scrollbar-thumb {
+  background: theme("colors.gray.500");
+}
+.scroller::-webkit-scrollbar-thumb:hover {
+  background: theme("colors.gray.600");
+}
+
 /* Gradient block */
 .border-gradient {
   @apply relative rounded-xl;
