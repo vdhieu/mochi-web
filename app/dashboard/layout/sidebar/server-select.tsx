@@ -4,7 +4,7 @@ import {
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Fragment, useState } from "react";
-import Select from "~components/popover";
+import Select from "~components/select";
 
 const options = [
   {

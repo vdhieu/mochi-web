@@ -4,6 +4,7 @@ import {
   MenuIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import classNames from "classnames";
 import { useState } from "react";
 import Input from "~components/form/input";
 import TextArea from "~components/form/textarea";
@@ -39,7 +40,7 @@ export const DashboardPage = () => {
       name: "test",
       url: null,
     },
-    color: "#5acff5",
+    color: "#e88b88",
     title: "dinhcao",
     description: "message",
     fields: [
@@ -180,6 +181,76 @@ export const DashboardPage = () => {
         <div className="border-gray-100 shadow-xl rounded-xl shadow-gray-100 bg-gray-50">
           <div className="p-6">
             <h3 className="mb-4 font-semibold text-md">Preview</h3>
+            <div className="p-4 bg-gray-100 border-l-4 rounded border-l-mochi-500">
+              <div className="flex items-start">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    {embed.author?.icon_url && (
+                      <img
+                        src={embed.author.icon_url}
+                        alt="author icon"
+                        className="block w-6 h-6 rounded-full"
+                      />
+                    )}
+                    {embed.author?.name && (
+                      <span className="text-sm font-medium">
+                        {embed.author.name}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-1 font-semibold leading-8">
+                    {embed.title}
+                  </div>
+                  <p className="mb-2 text-sm">{embed.description}</p>
+                  <div className="flex flex-wrap">
+                    {embed.fields?.map((field, key) => (
+                      <div
+                        className={classNames(
+                          "pr-2",
+                          field.inline ? "w-1/3" : "w-full"
+                        )}
+                        key={key}
+                      >
+                        <p className="font-semibold">{field.name}</p>
+                        <p className="mb-1">{field.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {embed.image && (
+                    <p className="mb-2">
+                      <img
+                        src={embed.image.url}
+                        alt="image"
+                        className="max-w-full rounded"
+                      />
+                    </p>
+                  )}
+                  {embed.footer && (
+                    <div className="flex items-center gap-2">
+                      {embed.footer.icon_url && (
+                        <img
+                          src={embed.footer.icon_url}
+                          alt="author icon"
+                          className="block w-5 h-5 rounded-full"
+                        />
+                      )}
+                      {embed.footer.text && (
+                        <span className="text-sm">{embed.footer.text}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {embed.thumbnail && (
+                  <div className="pr-6 w-[88px] max-h-[88px]">
+                    <img
+                      src={embed.thumbnail.url}
+                      alt="thumbnail"
+                      className="object-contain max-w-full rounded"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -80,9 +80,9 @@ const Item = (props: { item: ItemProps; active: boolean }) => {
   return (
     <button
       className={classNames(
-        "relative px-4 py-3 rounded-lg hover:bg-gray-100 flex items-center gap-2 w-full mb-2 group hover:z-10",
+        "relative px-4 py-3 rounded-lg flex items-center gap-2 w-full mb-2 group hover:z-10",
         "transition-shadow ease duration-200",
-        props.active ? "bg-gray-800" : "bg-white"
+        props.active ? "bg-gray-800" : "bg-white hover:bg-gray-100"
       )}
     >
       <props.item.icon className="block w-6 h-6 text-gray-400 transition-transform duration-200 group-hover:transform group-hover:scale-110 ease" />

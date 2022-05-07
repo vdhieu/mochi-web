@@ -19,7 +19,7 @@ const Select = <T,>(props: Props<T>) => {
         <Listbox.Button className={props.className}>
           {props.content(props.value)}
         </Listbox.Button>
-        <Listbox.Options className="absolute w-full">
+        <Listbox.Options className="absolute z-50 w-full">
           {props.children}
         </Listbox.Options>
       </Listbox>
