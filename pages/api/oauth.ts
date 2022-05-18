@@ -1,7 +1,6 @@
-import cookie from "cookie";
 import "isomorphic-fetch";
-import jwt from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import { API } from "~constants/api";
 
 const RETURN_TO = "/dashboard";
 
@@ -17,8 +16,7 @@ export interface DiscordUser {
   premium_type: number;
 }
 
-const { CLIENT_SECRET, CLIENT_ID, APP_URI, JWT_SECRET, COOKIE_NAME } =
-  process.env;
+const { CLIENT_SECRET, CLIENT_ID, APP_URI } = process.env;
 
 const scope = ["identify"].join(" ");
 const REDIRECT_URI = `${APP_URI}/api/oauth`;
@@ -38,9 +36,9 @@ export default async function OauthPage(
 ) {
   if (req.method !== "GET") return res.redirect("/");
 
-  const { code = null, error = null } = req.query;
+  const { code = null, error: queryError = null } = req.query;
 
-  if (error) return res.redirect("/?error=oauth");
+  if (queryError) return res.redirect("/?error=oauth");
   if (!code || typeof code !== "string") return res.redirect(OAUTH_URI);
 
   const body = new URLSearchParams({
@@ -60,26 +58,16 @@ export default async function OauthPage(
   const { access_token = null } = await oauth2.json();
 
   if (!access_token || typeof access_token !== "string") {
-    return res.redirect(OAUTH_URI);
+    return res.json({ error: "Cannot get access token from Discord" });
   }
 
-  const getUser = await fetch("http://discord.com/api/users/@me", {
-    headers: { Authorization: `Bearer ${access_token}` },
-  });
-  const me: DiscordUser | { unauthorized: true } = await getUser.json();
+  const { result, error: loginError } = await API.login(access_token);
 
-  if (!("id" in me)) return res.redirect(OAUTH_URI);
+  if (loginError) {
+    return res.json({ error: "Cannot get access token from Mochi" });
+  }
 
-  const token = jwt.sign(me, JWT_SECRET!, { expiresIn: "24h" });
-  res.setHeader(
-    "Set-Cookie",
-    cookie.serialize(COOKIE_NAME!, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: "lax",
-      path: "/",
-    })
-  );
+  if (result) return res.json(result);
 
-  res.redirect(RETURN_TO);
+  return res.json({ error: "Something went wrong" });
 }

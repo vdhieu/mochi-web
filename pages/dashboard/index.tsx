@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { DashboardPage } from "~app/dashboard";
-import { DashboardLayout } from "~app/dashboard/layout";
+import { Layout } from "~app/layout/dashboard";
 import { SEO } from "~app/layout/seo";
 import { DiscordUser } from "~pages/api/oauth";
 import { parseUser } from "~utils/user";
@@ -15,10 +15,10 @@ interface Props {
 
 export default function dashboard(props: DiscordUserProps) {
   return (
-    <DashboardLayout user={props.user}>
+    <Layout user={props.user}>
       <SEO title="Dashboard" tailTitle />
       <DashboardPage />
-    </DashboardLayout>
+    </Layout>
   );
 }
 

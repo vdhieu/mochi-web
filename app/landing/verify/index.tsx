@@ -1,6 +1,6 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { useCallback, useEffect, useState } from "react";
-import { Layout } from "~app/layout";
+import { Layout } from "~app/layout/landing";
 import { SEO } from "~app/layout/seo";
 import { PAGES } from "~constants";
 import { API } from "~constants/api";
@@ -28,13 +28,11 @@ export const VerifyPage = ({ code }: Props) => {
       const signature = await signer.signMessage(
         `This will help us connect your discord account to the wallet address.\n\nMochiBotCode=${code}`
       );
-      const response = await API.verify(account, code, signature);
-      if (response) {
-        if (response.status === "ok") {
-          setVerify(true);
-        } else {
-          setError(response.error || "");
-        }
+      const { result, error } = await API.verify(account, code, signature);
+      if (result && result.status === "ok") {
+        setVerify(true);
+      } else if (error) {
+        setError(error || "");
       }
     } catch (e) {
       console.error("sign method error", e);

@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { VerifyPage } from "~app/verify";
+import { VerifyPage } from "~app/landing/verify";
 
 export default function verify({ code }: { code: string }) {
   return <VerifyPage code={code} />;

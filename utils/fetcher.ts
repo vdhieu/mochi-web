@@ -1,7 +1,16 @@
+interface FetcherMayError {
+  error?: string;
+}
+
+interface FetcherResult<T> extends FetcherMayError {
+  status?: number;
+  result?: T;
+}
+
 const get = async <T>(
   endpoint: string,
   initHeaders?: HeadersInit
-): Promise<T | undefined> => {
+): Promise<FetcherResult<T>> => {
   try {
     const headers: Record<string, any> = {
       "Content-Type": "application/json",
@@ -13,9 +22,18 @@ const get = async <T>(
       method: "GET",
     });
     const response = await fetcher.json();
-    return response as T;
+    if ("error" in response) {
+      return { status: fetcher.status, error: response.error };
+    }
+    return { status: fetcher.status, result: response as T };
   } catch (e) {
-    console.error(`Call to ${endpoint} error\n`, e);
+    console.error(`Call GET to ${endpoint} error\n`, e);
+    return {
+      error:
+        typeof e === "object" && "message" in (e as any)
+          ? (e as any).message
+          : "Something went wrong",
+    };
   }
 };
 
@@ -23,7 +41,7 @@ const post = async <T>(
   endpoint: string,
   body: Record<string, any>,
   initHeaders?: HeadersInit
-): Promise<T | undefined> => {
+): Promise<FetcherResult<T>> => {
   try {
     const headers: Record<string, any> = {
       "Content-Type": "application/json",
@@ -39,9 +57,18 @@ const post = async <T>(
       body: JSON.stringify(body),
     });
     const response = await fetcher.json();
-    return response as T;
+    if ("error" in response) {
+      return { status: fetcher.status, error: response.error };
+    }
+    return { status: fetcher.status, result: response as T };
   } catch (e) {
-    console.error(`Call to ${endpoint} error\n`, e);
+    console.error(`Call POST to ${endpoint} error\n`, e);
+    return {
+      error:
+        typeof e === "object" && "message" in (e as any)
+          ? (e as any).message
+          : "Something went wrong",
+    };
   }
 };
 

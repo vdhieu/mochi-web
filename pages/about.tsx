@@ -1,4 +1,4 @@
-import { AboutPage } from "~app/about";
+import { AboutPage } from "~app/landing/about";
 
 export default function about() {
   return <AboutPage />;

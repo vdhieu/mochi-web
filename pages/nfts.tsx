@@ -1,4 +1,4 @@
-import { NFTPage } from "~app/nfts";
+import { NFTPage } from "~app/landing/nfts";
 
 export default function nfts() {
   return <NFTPage />;

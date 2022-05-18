@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { ChangelogPage } from "~app/changelog";
+import { ChangelogPage } from "~app/landing/changelog";
 import { DataService } from "~utils/data";
 
 export interface ChangelogContent {

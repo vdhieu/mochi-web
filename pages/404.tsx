@@ -1,4 +1,4 @@
-import { Layout } from "~app/layout";
+import { Layout } from "~app/layout/landing";
 import { SEO } from "~app/layout/seo";
 
 export default function notfound() {

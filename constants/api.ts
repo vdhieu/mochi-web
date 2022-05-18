@@ -11,17 +11,20 @@ const API_GW = {
 
 const getGW = () => (isProd ? API_GW.PROD : API_GW.DEV);
 
-const verify = async (
-  wallet_address: string,
-  code: string,
-  signature: string
-) =>
-  await fetcher.post<{ error?: string; status?: string }>(`${getGW()}/verify`, {
+const verify = (wallet_address: string, code: string, signature: string) =>
+  fetcher.post<{ status: string }>(`${getGW()}/verify`, {
     wallet_address,
     code,
     signature,
   });
 
+const login = (access_token: string) =>
+  fetcher.post<{ access_token: string; expires_at: number }>(
+    `${getGW()}/auth/login`,
+    { access_token }
+  );
+
 export const API = {
   verify,
+  login,
 };
