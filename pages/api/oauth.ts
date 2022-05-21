@@ -2,8 +2,6 @@ import "isomorphic-fetch";
 import { NextApiRequest, NextApiResponse } from "next";
 import { API } from "~constants/api";
 
-const RETURN_TO = "/dashboard";
-
 export interface DiscordUser {
   id: string;
   username: string;
@@ -57,17 +55,14 @@ export default async function OauthPage(
   });
   const { access_token = null } = await oauth2.json();
 
-  if (!access_token || typeof access_token !== "string") {
-    return res.json({ error: "Cannot get access token from Discord" });
-  }
+  if (!access_token || typeof access_token !== "string")
+    return res.redirect("/?error=Cannot authorize");
 
   const { result, error: loginError } = await API.login(access_token);
 
-  if (loginError) {
-    return res.json({ error: "Cannot get access token from Mochi" });
-  }
+  if (loginError) return res.redirect("/?error=Cannot authorize");
 
-  if (result) return res.json(result);
+  if (result) return res.redirect(`/dashboard?token=${access_token}`);
 
-  return res.json({ error: "Something went wrong" });
+  return res.redirect("/?error=Something went wrong");
 }

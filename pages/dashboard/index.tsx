@@ -1,37 +1,29 @@
-import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { DashboardPage } from "~app/dashboard";
 import { Layout } from "~app/layout/dashboard";
 import { SEO } from "~app/layout/seo";
-import { DiscordUser } from "~pages/api/oauth";
-import { parseUser } from "~utils/user";
+import { useUserAuth } from "~hooks/useUserAuth";
 
-export interface DiscordUserProps {
-  user: DiscordUser;
-}
+export default function Dashboard() {
+  const router = useRouter();
+  const { isAuthorized, authorize, setToken } = useUserAuth();
 
-interface Props {
-  user: DiscordUser | null;
-}
+  const { access_token } = router.query;
 
-export default function dashboard(props: DiscordUserProps) {
+  useEffect(() => {
+    if (!access_token) {
+      if (isAuthorized() === false) authorize();
+      return;
+    }
+    if (access_token && typeof access_token === "string")
+      setToken(access_token);
+  }, [access_token, authorize, isAuthorized, setToken]);
+
   return (
-    <Layout user={props.user}>
+    <Layout>
       <SEO title="Dashboard" tailTitle />
       <DashboardPage />
     </Layout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<Props> = async function (
-  ctx
-) {
-  const user = parseUser(ctx);
-
-  if (!user) {
-    ctx.res.statusCode = 307;
-    ctx.res.setHeader("Location", "/api/oauth");
-    ctx.res.end();
-  }
-
-  return { props: { user } };
-};
