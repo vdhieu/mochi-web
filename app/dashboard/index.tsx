@@ -5,10 +5,9 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "~components/form/input";
 import TextArea from "~components/form/textarea";
-import { useUserAuth } from "~hooks/useUserAuth";
 
 interface EmbedMessage {
   author?: {
@@ -34,12 +33,6 @@ interface EmbedMessage {
 }
 
 export const DashboardPage = () => {
-  const { authorize } = useUserAuth();
-
-  useEffect(() => {
-    authorize();
-  }, []);
-
   const [embed, setEmbed] = useState<EmbedMessage>({
     author: {
       icon_url:
